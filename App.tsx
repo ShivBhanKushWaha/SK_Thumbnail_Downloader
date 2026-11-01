@@ -97,6 +97,7 @@ export default App;
 
 
 // npx react-native run-android --mode="release"
+
 // adb uninstall com.zumigo
 // cd android
 // ./gradlew clean
