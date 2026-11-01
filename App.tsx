@@ -6,20 +6,24 @@
  */
 
 import "./global.css";
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { Gallery, Home } from '@src/screens';
+import { Channel, Gallery, Home } from '@src/screens';
 import ReceiveSharingIntent from 'react-native-receive-sharing-intent';
-import SplashScreen from '@src/components/SplashScreen'; // ✅ your custom splash
+import SplashScreen from '@src/components/SplashScreen';
 import { extractVideoId } from "@src/utils/extractVideoId";
 
 const Tab = createBottomTabNavigator();
 
-const App = () => {
+const Root = () => {
+  const insets = useSafeAreaInsets();
   const [showSplash, setShowSplash] = useState(true);
+  const hideSplash = useCallback(() => setShowSplash(false), []);
 
 useEffect(() => {
   ReceiveSharingIntent.getReceivedFiles(
@@ -48,24 +52,18 @@ useEffect(() => {
   };
 }, []);
 
-  // After 2 seconds, hide custom splash screen
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // ✅ Show splash screen until it's done
-  if (showSplash) return <SplashScreen onFinish={() => {}} />;
+  if (showSplash) return <SplashScreen onFinish={hideSplash} />;
 
   return (
     <NavigationContainer>
+      <StatusBar barStyle="dark-content"/>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ color, size }) => {
             if (route.name === 'Home') {
               return <AntDesign name="home" size={size} color={color} />;
+            } else if (route.name === 'Channel') {
+              return <Ionicons name="albums-outline" size={size} color={color} />;
             } else if (route.name === 'Gallery') {
               return <Ionicons name="images-outline" size={size} color={color} />;
             }
@@ -76,7 +74,8 @@ useEffect(() => {
             backgroundColor: 'lightgreen',
             borderTopWidth: 0,
             elevation: 0,
-            height: 60,
+            height: 60 + insets.bottom,
+            paddingBottom: insets.bottom,
           },
           tabBarLabelStyle: {
             fontSize: 12,
@@ -86,11 +85,18 @@ useEffect(() => {
         })}
       >
         <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Channel" component={Channel} />
         <Tab.Screen name="Gallery" component={Gallery} />
       </Tab.Navigator>
     </NavigationContainer>
   );
 };
+
+const App = () => (
+  <SafeAreaProvider>
+    <Root />
+  </SafeAreaProvider>
+);
 
 export default App;
 

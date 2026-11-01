@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+def getExtOrDefault(name, fallback) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : fallback
+}
+
+android {
+  namespace "com.reactnativereceivesharingintent"
+  compileSdk getExtOrDefault('compileSdkVersion', 36)
+  buildToolsVersion getExtOrDefault('buildToolsVersion', '36.0.0')
+
+  defaultConfig {
+    minSdkVersion getExtOrDefault('minSdkVersion', 24)
+    targetSdkVersion getExtOrDefault('targetSdkVersion', 36)
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+repositories {
+  mavenCentral()
+  google()
+}
+
+dependencies {
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:${getExtOrDefault('kotlinVersion', '2.2.0')}"
+}

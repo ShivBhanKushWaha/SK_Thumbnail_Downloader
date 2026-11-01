@@ -4,7 +4,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "es2015",
-    "types": ["react-native", "jest"],
+    "types": ["react-native", "jest", "node"],
     "lib": [
       "es2019",
       "es2020.bigint",
@@ -36,6 +36,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "typeRoots": ["./node_modules/@types", "/"],
     "paths": {
       "@src/*": ["src/*"],

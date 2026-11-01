@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, FlatList, PermissionsAndroid, Platform, Text, ActivityIndicator } from 'react-native';
+import { FlatList, PermissionsAndroid, Platform, Text, ActivityIndicator } from 'react-native';
 import { CameraRoll, PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import ThumbnailCard from '@src/components/ThumbnailCard';
 import { useFocusEffect } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const GalleryScreen: React.FC = () => {
   const [photos, setPhotos] = useState<string[]>([]);
@@ -73,7 +74,7 @@ useFocusEffect(
 );
 
  return (
-  <View className="flex-1 bg-white p-4 justify-center items-center">
+  <SafeAreaView className="flex-1 bg-white p-4 justify-center items-center" edges={['top']}>
     {loading ? (
       <ActivityIndicator size="large" color="green" />
     ) : error ? (
@@ -89,7 +90,7 @@ useFocusEffect(
         contentContainerStyle={{ paddingBottom: 16 }}
       />
     )}
-  </View>
+  </SafeAreaView>
 );
 
 };

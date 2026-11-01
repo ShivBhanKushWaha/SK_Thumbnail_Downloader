@@ -1,3 +1,4 @@
+import ScreenHeader from '@src/components/ScreenHeader';
 import ThumbnailInput from '@src/components/ThumbnailInput';
 import { extractVideoId } from '@src/utils/extractVideoId';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -13,6 +14,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import RNFS from 'react-native-fs';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import ReceiveSharingIntent from 'react-native-receive-sharing-intent';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -77,7 +79,7 @@ const downloadThumbnail = useCallback(
     if (!hasPermission) return;
 
     const filename = `${videoId}.jpg`;
-    const folderPath = `${RNFS.PicturesDirectoryPath}/ThumbnailDownloader`;
+    const folderPath = `${RNFS.PicturesDirectoryPath}/Thumvo`;
     const filePath = `${folderPath}/${filename}`;
 
     try {
@@ -113,7 +115,7 @@ const downloadThumbnail = useCallback(
 
 const loadSavedThumbnails = async (): Promise<void> => {
   try {
-    const folderPath = `${RNFS.PicturesDirectoryPath}/SkDesigns`;
+    const folderPath = `${RNFS.PicturesDirectoryPath}/Thumvo`;
 
     const exists = await RNFS.exists(folderPath);
     if (!exists) {
@@ -207,10 +209,9 @@ useEffect(() => {
   };
 
   return (
-    <ScrollView className="p-4 bg-white">
-      <Text className="text-[14px] font-bold text-blue-900 mb-3 text-center bg-red-200 px-3 py-5 rounded-2xl">
-        Sk Designs Thumbnail Downloader
-      </Text>
+    <SafeAreaView className="flex-1 bg-white" edges={['top']}>
+    <ScrollView className="p-4">
+      <ScreenHeader title="Thumvo" subtitle="Download any YouTube video thumbnail" />
 
       <ThumbnailInput url={url} setUrl={handleUrlChange} onGenerate={handleGenerate} />
 
@@ -304,6 +305,7 @@ setUrl('');
         </>
       )}
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
