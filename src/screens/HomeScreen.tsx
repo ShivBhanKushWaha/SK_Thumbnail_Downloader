@@ -79,7 +79,7 @@ const downloadThumbnail = useCallback(
     if (!hasPermission) return;
 
     const filename = `${videoId}.jpg`;
-    const folderPath = `${RNFS.PicturesDirectoryPath}/Thumvo`;
+    const folderPath = `${RNFS.PicturesDirectoryPath}/Thumvo/Youtube`;
     const filePath = `${folderPath}/${filename}`;
 
     try {
@@ -115,7 +115,7 @@ const downloadThumbnail = useCallback(
 
 const loadSavedThumbnails = async (): Promise<void> => {
   try {
-    const folderPath = `${RNFS.PicturesDirectoryPath}/Thumvo`;
+    const folderPath = `${RNFS.PicturesDirectoryPath}/Thumvo/Youtube`;
 
     const exists = await RNFS.exists(folderPath);
     if (!exists) {

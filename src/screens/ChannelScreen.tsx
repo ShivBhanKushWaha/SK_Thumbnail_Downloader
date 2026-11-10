@@ -149,7 +149,7 @@ const ChannelScreen: React.FC = () => {
       return;
     }
 
-    const folder = `${RNFS.PicturesDirectoryPath}/Thumvo/${safeFolderName(channel.title)}`;
+    const folder = `${RNFS.PicturesDirectoryPath}/Thumvo/Youtube/${safeFolderName(channel.title)}`;
     await RNFS.mkdir(folder);
 
     cancelled.current = false;
@@ -267,7 +267,7 @@ const ChannelScreen: React.FC = () => {
 
           {finished && (
             <Text className="text-green-700 text-xs mt-2">
-              Saved in Pictures/Thumvo/{safeFolderName(channel.title)}
+              Saved in Pictures/Thumvo/Youtube/{safeFolderName(channel.title)}
             </Text>
           )}
         </View>
