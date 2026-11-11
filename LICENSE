@@ -1,24 +1,38 @@
 Copyright (c) 2026 Shivbhan Kushwaha. All rights reserved.
 
-PROPRIETARY LICENSE - NO PERMISSION GRANTED
+END-USER LICENSE (USE ONLY)
 
-This software and its source code, documentation and assets (the "Software")
-are the exclusive property of Shivbhan Kushwaha.
+This software, including its source code, documentation and assets (the
+"Software"), is owned by Shivbhan Kushwaha. The Software is licensed, not sold.
 
-No license or permission of any kind is granted. Without prior written
-permission from the copyright holder you may NOT:
+PERMISSION GRANTED
+You may install and use the Software, in the form it is distributed to you
+(for example an installer, an APK/app, or an installed package), for your own
+personal or internal business purposes, free of charge, on devices you control.
 
-  - use, run or deploy the Software, in whole or in part;
-  - copy, reproduce, fork, modify, adapt or create derivative works;
-  - distribute, publish, sublicense, sell, rent or lend the Software;
-  - reverse engineer, decompile or extract code, designs or assets from it;
-  - use it to train machine-learning models or in any commercial product.
+WHAT YOU MAY NOT DO
+Without prior written permission from the copyright holder you may NOT:
 
-Viewing the source code (for example where a repository is publicly visible)
-does not grant any of the rights listed above.
+  - copy, fork, modify, adapt, translate or create derivative works of the
+    Software or its source code;
+  - redistribute, republish, sublicense, sell, rent, lend or host the Software
+    or any part of it, or offer it to third parties as a service;
+  - reverse engineer, decompile, disassemble or extract source code, designs
+    or assets, except where the law expressly allows it despite this limit;
+  - remove or alter copyright or license notices;
+  - use the Software, its code or its output to build a competing product or to
+    train machine-learning models.
 
+Having access to the source code (for example in a repository) does not grant
+any right beyond "use" as described above.
+
+TERMINATION
+This license ends automatically if you breach it. Then you must stop using the
+Software and delete all copies.
+
+NO WARRANTY
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM,
 DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
 
-For permission requests, contact the copyright holder.
+For other permissions, contact the copyright holder.
