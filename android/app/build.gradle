@@ -28,7 +28,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
 
     signingConfigs {
@@ -70,3 +70,30 @@ dependencies {
 }
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+// ---- Output file names: <App>-<versionName>.apk / .aab (release), e.g. Thumvo-1.0.0.apk ----
+// debug builds get a "-debug" suffix. The bundle keeps its default file and also gets a correctly named copy.
+def appFileName = "Thumvo"
+def fileSuffix = { String buildType -> buildType == "release" ? "" : "-${buildType}" }
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        outputFileName = "${appFileName}-${variant.versionName}${fileSuffix(variant.buildType.name)}.apk"
+    }
+}
+
+afterEvaluate {
+    android.applicationVariants.all { variant ->
+        def bundleTask = tasks.findByName("bundle${variant.name.capitalize()}")
+        if (bundleTask != null) {
+            bundleTask.doLast {
+                def dir = new File(buildDir, "outputs/bundle/${variant.name}")
+                def src = new File(dir, "app-${variant.name}.aab")
+                if (src.exists()) {
+                    def dst = new File(dir, "${appFileName}-${variant.versionName}${fileSuffix(variant.buildType.name)}.aab")
+                    java.nio.file.Files.copy(src.toPath(), dst.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+                }
+            }
+        }
+    }
+}
