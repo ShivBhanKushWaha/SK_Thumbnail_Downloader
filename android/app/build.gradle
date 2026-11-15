@@ -17,6 +17,17 @@ apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.grad
 def enableProguardInReleaseBuilds = false
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
+
+// Release signing secrets are kept out of git: android/keystore.properties first, then environment variables.
+// Without them a release build is signed with the debug key (fine for testing, not for the Play Store).
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { keystoreProperties.load(it) }
+}
+def releaseSigning = { String key -> keystoreProperties.getProperty(key) ?: System.getenv(key) }
+def hasReleaseSigning = releaseSigning('MYAPP_UPLOAD_STORE_FILE') != null
+
 android {
     namespace "com.sktailorenza.thumvo"
     compileSdk rootProject.ext.compileSdkVersion
@@ -38,6 +49,15 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            // From android/keystore.properties (git-ignored) or MYAPP_UPLOAD_* environment variables.
+            if (hasReleaseSigning) {
+                storeFile file(releaseSigning('MYAPP_UPLOAD_STORE_FILE'))
+                storePassword releaseSigning('MYAPP_UPLOAD_STORE_PASSWORD')
+                keyAlias releaseSigning('MYAPP_UPLOAD_KEY_ALIAS')
+                keyPassword releaseSigning('MYAPP_UPLOAD_KEY_PASSWORD')
+            }
+        }
     }
 
     buildTypes {
@@ -45,7 +65,7 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            signingConfig signingConfigs.debug
+            signingConfig hasReleaseSigning ? signingConfigs.release : signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }

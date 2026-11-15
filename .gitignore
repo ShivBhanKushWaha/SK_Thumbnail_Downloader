@@ -78,3 +78,6 @@ yarn-error.log
 .env
 .env.*
 !.env.example
+
+# Release signing secrets
+android/keystore.properties
